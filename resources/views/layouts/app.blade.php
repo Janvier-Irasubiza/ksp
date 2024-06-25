@@ -7,11 +7,23 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <link rel="stylesheet" href="styles.css">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <link rel="stylesheet" href="{{ asset('datatables/dataTables.bootstrap4.css') }}">
+        <!-- DataTables CSS -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+
+        <!-- jQuery (necessary for DataTables) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <!-- DataTables JavaScript -->
+        <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -22,7 +34,7 @@
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white shadow">
+                <header class="bg-white shadow-sm">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
@@ -35,9 +47,11 @@
             </main>
         </div>
 
-        <script src="{{ asset('datatables/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('datatables/dataTables.bootstrap4.min.js') }}"></script>
-        <script src="{{ asset('datatables/datatables-demo.js') }}"></script>
-
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#dataTable').DataTable();
+            });
+        </script>
+        
     </body>
 </html>

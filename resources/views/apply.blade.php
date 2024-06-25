@@ -33,11 +33,11 @@
         <p class="mt-3">
             <strong>KSP RWANDA is located in Kigali City Centre Saint Paul near Saint Famille</strong>
             <a href="">Email: ksprwanda@gmail.com</a><br>
-            web: <a href="www.ksp.com">www.ksp.com</a><br>
+            web: <a href="{{ route('ksp') }}">www.ksp.rw</a><br>
             tel: <a href="+250785478665">0785478665</a><br>
         </p>
     </div>
-    <form method="POST" action="" class="w-full">
+    <form method="POST" action="{{ route('submit-app') }}" class="w-full" enctype="multipart/form-data">
         <div class="flex justify-content-between align-items-center">
             <div><h1>APPLY</h1></div>
             <div><a href="" class="f-12 fw underline about-btn">ABOUT APPLICATION</a></div>
@@ -61,7 +61,7 @@
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 
-            <!-- Email Address -->
+            <!-- phone number -->
             <div class="mt-6">
                 <x-input-label for="phone" :value="__('Phone number')" />
                 <small>Nimero ya telephone</small>
@@ -69,39 +69,39 @@
                 <x-input-error :messages="$errors->get('phone')" class="mt-2" />
             </div>
 
-            <!-- Email Address -->
+            <!-- Course -->
             <div class="mt-6">
                 <x-input-label for="course" :value="__('Select One Course')" />
                 <small>Hitamo isomo rimwe wifuza kwiga</small>
-                <select class="block mt-1 w-full border rounded" name="course" value="{{ old('course') }}">
-                    <option value="MULTIMEDIA">MULTIMEDIA</option>
-                    <option value="HOSPITALITY">HOSPITALITY</option>
-                    <option value="FILMMAKING AND VIDEO PRODUCTION">FILMMAKING AND VIDEO PRODUCTION</option>
-                    <option value="PHOTOGRAPHY AND GRAPHIC DESIGN">PHOTOGRAPHY AND GRAPHIC DESIGN</option>
-                    <option value="JOURNALISM AND COMMUNUCATION">JOURNALISM AND COMMUNUCATION</option>
-                    <option value="MUSIC">MUSIC</option>
-                    <option value="COMPUTER">COMPUTER</option>
-                    <option value="ENGLISH">ENGLISH</option>
-                    <option value="FRENCH">FRENCH</option>
+                <select class="block mt-1 w-full border rounded" name="course">
+                    <option value="MULTIMEDIA" {{ old('course') == 'MULTIMEDIA' ? 'selected' : '' }}>MULTIMEDIA</option>
+                    <option value="HOSPITALITY" {{ old('course') == 'HOSPITALITY' ? 'selected' : '' }}>HOSPITALITY</option>
+                    <option value="FILMMAKING AND VIDEO PRODUCTION" {{ old('course') == 'FILMMAKING AND VIDEO PRODUCTION' ? 'selected' : '' }}>FILMMAKING AND VIDEO PRODUCTION</option>
+                    <option value="PHOTOGRAPHY AND GRAPHIC DESIGN" {{ old('course') == 'PHOTOGRAPHY AND GRAPHIC DESIGN' ? 'selected' : '' }}>PHOTOGRAPHY AND GRAPHIC DESIGN</option>
+                    <option value="JOURNALISM AND COMMUNUCATION" {{ old('course') == 'JOURNALISM AND COMMUNUCATION' ? 'selected' : '' }}>JOURNALISM AND COMMUNUCATION</option>
+                    <option value="MUSIC" {{ old('course') == 'MUSIC' ? 'selected' : '' }}>MUSIC</option>
+                    <option value="COMPUTER" {{ old('course') == 'COMPUTER' ? 'selected' : '' }}>COMPUTER</option>
+                    <option value="ENGLISH" {{ old('course') == 'ENGLISH' ? 'selected' : '' }}>ENGLISH</option>
+                    <option value="FRENCH" {{ old('course') == 'FRENCH' ? 'selected' : '' }}>FRENCH</option>
                 </select>
                 <x-input-error :messages="$errors->get('course')" class="mt-2" />
             </div>
 
-            <!-- Email Address -->
+            <!-- Education level -->
             <div class="mt-6">
                 <x-input-label for="edu_level" :value="__('Level Of Education')" />
                 <small>Ikiciro cy'amashuri</small>
-                <select class="block mt-1 w-full border rounded" name="edu_level" value="{{ old('edu_level') }}">
-                    <option value="Primary Level">Primary Level</option>
-                    <option value="Ordinary Level (O'Level)">Ordinary Level (O'Level)</option>
-                    <option value="Advanced Level (A'Level)">Advanced Level (A'Level)</option>
-                    <option value="University">University</option>
-                    <option value="Other Certificate">Other Certificate</option>
+                <select class="block mt-1 w-full border rounded" name="edu_level" required>
+                    <option value="Primary Level" {{ old('edu_level') == 'Primary Level' ? 'selected' : '' }}>Primary Level</option>
+                    <option value="Ordinary Level (O'Level)" {{ old('edu_level') == "Ordinary Level (O'Level)" ? 'selected' : '' }}>Ordinary Level (O'Level)</option>
+                    <option value="Advanced Level (A'Level)" {{ old('edu_level') == "Advanced Level (A'Level)" ? 'selected' : '' }}>Advanced Level (A'Level)</option>
+                    <option value="University" {{ old('edu_level') == 'University' ? 'selected' : '' }}>University</option>
+                    <option value="Other Certificate" {{ old('edu_level') == 'Other Certificate' ? 'selected' : '' }}>Other Certificate</option>
                 </select>
                 <x-input-error :messages="$errors->get('edu_level')" class="mt-2" />
             </div>
 
-            <!-- Email Address -->
+            <!-- Application letter -->
             <div class="mt-6">
                 <div class="flex justify-content-between align-items-center">
                 <x-input-label for="ap_letter" :value="__('Scholarship application Letter')" />
@@ -112,7 +112,7 @@
                 <x-input-error :messages="$errors->get('ap_letter')" class="mt-2" />
             </div>
 
-            <!-- Email Address -->
+            <!-- Certificate/Degree -->
             <div class="mt-6">
                 <x-input-label for="certificate" :value="__('Supporting Educational Document i.e Diploma/Degree/Result Slip or Certificate (allowed to upload more than 1)')" />
                 <small>Shyiramo Impamyabumenyi cyangwa Impamyabushobozi</small>
@@ -120,37 +120,38 @@
                 <x-input-error :messages="$errors->get('certificate')" class="mt-2" />
             </div>
 
-            <!-- Email Address -->
+            <!-- Confirm -->
             <div class="mt-6">
                 <x-input-label for="confirm" :value="__('Is it you first time to apply at KSP RWANDA?')" />
                 <small>Ni inshuro y'ambere usabye kwiga muri KSP RWANDA?</small>
-                <select class="block mt-1 w-full border rounded" name="confirm" value="{{ old('confirm') }}">
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                <select class="block mt-1 w-full border rounded" name="confirm" required>
+                    <option value="Yes" {{ old('confirm') == 'Yes' ? 'selected' : '' }}>Yes</option>
+                    <option value="No" {{ old('confirm') == 'No' ? 'selected' : '' }}>No</option>
                 </select>
                 <x-input-error :messages="$errors->get('confirm')" class="mt-2" />
             </div>
 
-            <!-- Email Address -->
+            <!-- Place -->
             <div class="mt-6">
                 <x-input-label for="place" :value="__('Which Place will you get a course?')" />
                 <small>Urifuza kwigira he?</small>
-                <select class="block mt-1 w-full border rounded" name="place" value="{{ old('place') }}">
-                    <option value="Kigali City (Centre Saint Paul)">Kigali City (Centre Saint Paul)</option>
-                    <option value="Kayonza District (Kayonza Youth Friendly Center)">Kayonza District (Kayonza Youth Friendly Center)</option>
+                <select class="block mt-1 w-full border rounded" name="place" required>
+                    <option value="Kigali City (Centre Saint Paul)" {{ old('place') == 'Kigali City (Centre Saint Paul)' ? 'selected' : '' }}>Kigali City (Centre Saint Paul)</option>
+                    <option value="Kayonza District (Kayonza Youth Friendly Center)" {{ old('place') == 'Kayonza District (Kayonza Youth Friendly Center)' ? 'selected' : '' }}>Kayonza District (Kayonza Youth Friendly Center)</option>
                 </select>
                 <x-input-error :messages="$errors->get('place')" class="mt-2" />
             </div>
 
-            <!-- Email Address -->
+            <!-- Receipt -->
             <div class="mt-6">
-                <x-input-label for="receipt" :value="__('Receipt of 2000FRW for application')" />
+                <x-input-label for="receipt" :value="__('Receipt of 2,000RWF for application')" />
                 <small>
-                paid at: <br>
-                &nbsp; - MOMO code: *182*8*1*024666# US KSPRWA Ltd <br>
-                &nbsp; - GT Bank account:211243635151180 (ksp ltd)<br>
-               <strong> NB: Allowed to be filled is Image(jpg)</strong>
-            </small>
+                    paid at: <br>
+                    &nbsp; - MOMO code: *182*8*1*024666# US KSPRWA Ltd <br>
+                    &nbsp; - GT Bank account:211243635151180 (ksp ltd)<br>
+                    <strong> NB: Allowed to be filled is Image(jpg)</strong>
+                    <p class="mt-2">Upload only Screenshot proving your application payment and contact reception for check up on your reference number. if more than one person are using the same number to pay, it is not allowed to send application fees collectively. you must send the fees one by one               </p>
+                </small>
                 <x-text-input id="receipt" class="block mt-1 w-full" type="file" name="receipt" :value="old('receipt')" required autocomplete="receipt" />
                 <x-input-error :messages="$errors->get('receipt')" class="mt-2" />
             </div>
