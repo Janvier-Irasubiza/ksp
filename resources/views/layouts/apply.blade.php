@@ -11,7 +11,8 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
         <!-- Styles -->
         <link rel="stylesheet" href="styles.css">
 
@@ -21,13 +22,13 @@
     <body class="font-sans text-gray-900 antialiased">            
         <div class="min-h-screen w-100 flex mt-6 mb-6 flex-col sm:justify-center items-center sm:pt-0 bg-gray-100">
         <div class="flex flex-col sm:justify-center items-center">
-            <div>
+            <div class="col-md-3 p-0">
                 <a href="/">
                     <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
                 </a>
             </div>
 
-            <div class="w-90 mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <div class="w-90 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
             </div>
         </div>
@@ -74,4 +75,3 @@
 
         </script>
     </body>
-</html>
