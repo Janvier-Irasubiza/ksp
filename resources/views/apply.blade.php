@@ -1,3 +1,6 @@
+@section('title', 'NKUNGANIRE BURUSE KSP RWANDA APPLICATION FORM 2024')
+
+
 <x-apply-layout>
 <div class="flex-section gap-5">
     <div class="about w-full">

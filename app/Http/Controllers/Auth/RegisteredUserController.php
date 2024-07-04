@@ -22,6 +22,11 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
+    public function agent_form(): View
+    {
+        return view('auth.new');
+    }
+
     /**
      * Handle an incoming registration request.
      *
@@ -46,5 +51,30 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));
+    }
+
+    public function new_agent(Request $request): RedirectResponse {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'phone' => ['required', 'string', 'max:15'],
+            'promo_code' => ['required', 'string', 'max:255', 'unique:'.User::class],
+            'address' => ['required', 'string', 'max:255'],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'promo_code' => $request->promo_code,
+            'address' => $request->address,
+            'type' => 'AGT',
+        ]);
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        return back() -> with('status', 'Account successfully created');
     }
 }

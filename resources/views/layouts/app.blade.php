@@ -7,7 +7,7 @@
 
         <title>{{ config('app.name') }}</title>
 
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="{{ asset('styles.css') }}?v={{ filemtime(public_path('styles.css')) }}">
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Fonts -->
