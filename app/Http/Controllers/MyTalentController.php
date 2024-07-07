@@ -66,11 +66,7 @@ class MyTalentController extends Controller
 
             if ($request->has('promo_code')) {
                 $data['promo_code'] = $request->input('promo_code');
-                $agent = User::where('promo_code', $request->input('promo_code'))->first();
-                $agent_percentage = $agent->percentage;
-
-                $app_fee = 10000;
-                $data['agent_part'] = ($app_fee * $agent_percentage)/100;
+                $data['agent_part'] = 1000;
             }    
     
             MyTalent::create($data);

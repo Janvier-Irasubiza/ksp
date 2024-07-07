@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('mytalent', function (Blueprint $table) {
+        Schema::table('applications', function (Blueprint $table) {
+            $table->string('app_id');
             $table->string('status')->nullable();
+            $table->string('agent_part')->nullable();
+
         });
     }
 
@@ -21,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('mytalent', function (Blueprint $table) {
+        Schema::table('applications', function (Blueprint $table) {
             //
         });
     }
