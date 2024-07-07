@@ -6,21 +6,25 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 
-class Application extends Model
+class MyTalent extends Model
 {
     use HasFactory;
+
+    protected $table = 'mytalent';
 
     protected $fillable = [
         'app_id',
         'names',
         'email',
         'phone',
-        'course',
-        'edu_level',
-        'app_letter',
-        'certificate',
-        'first_time',
-        'place',
+        'birthdate',
+        'district',
+        'talent_class',
+        'talent_category',
+        'other',
+        'location',
+        'group_app_sheet',
+        'category_desc',
         'receipt',
         'promo_code',
         'agent_part',

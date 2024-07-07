@@ -24,11 +24,11 @@ class ApplicationsController extends Controller
             'phone' => 'required|string|max:20',
             'course' => 'required|string',
             'edu_level' => 'required|string',
-            'ap_letter' => 'required|file|mimes:pdf|max:2048',
+            'ap_letter' => 'required|file|mimes:pdf,docx,doc|max:2048',
             'certificate' => 'required|file|mimes:pdf,jpg,png|max:2048',
             'confirm' => 'required|string',
             'place' => 'required|string',
-            'receipt' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'receipt' => 'required|image|mimes:jpeg,png,jpg,pdf|max:2048',
         ]);
 
         // Handle file uploads

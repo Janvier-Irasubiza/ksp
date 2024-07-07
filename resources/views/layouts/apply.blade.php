@@ -16,10 +16,13 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('styles.css') }}?v={{ filemtime(public_path('styles.css')) }}">
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     </head>
-    <body class="font-sans text-gray-900 antialiased">            
+    <body class="font-sans text-gray-900 antialiased">                  
         <div class="min-h-screen w-100 flex mt-6 mb-6 flex-col sm:justify-center items-center sm:pt-0 bg-gray-100">
         <div class="flex flex-col sm:justify-center items-center">
             <div class="col-md-3 p-0">
@@ -28,50 +31,169 @@
                 </a>
             </div>
 
-            <div class="w-90 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <div class="w-90 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg mb-8">
                 {{ $slot }}
             </div>
+
+            <footer class="bg-gray-200 py-4 mt-6 border-t">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between">
+                    <p class="text-center text-gray-600">&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
+                    <button id="contactButton"  class="text-center text-gray-600 shake"> <i class="fa-solid fa-code"></i> &nbsp; <strong>RB-A</strong></button>
+                </div>
+            </footer>
+
+            <div id="popup" class="popup p-4 border col-md-6 bg-gray-200">
+                <div class="flex justify-between">
+                    <h1 class="text-gray-600">RhythmBox Associations</h1>
+                    <button id="closePopup">Close</button>
+                </div>
+                <div class="mt-4 flex-section gap-3">
+                   <div class="col-md-4 border-r mb-8">
+                   <h2 class="text-gray-600 text-center">Contact</h2>
+                    <div class="mt-6">
+
+                        <p class="text-center">
+                            <i class="fa-solid fa-phone f-25"></i>
+                        </p>
+                        <p class="text-gray-600 text-center mt-2">+250 781 336 634</p>
+                    </div>
+                    <div class="mt-6">
+                        <p class="text-center">
+                            <i class="fa-solid fa-phone f-25"></i>
+                        </p>
+                        <p class="text-gray-600 text-center mt-2">+250 780 478 405</p>
+                    </div>
+
+                    <div class="mt-6">
+                        <p class="text-center">
+                            <i class="fa-solid fa-envelope f-25"></i>
+                        </p>
+                        <p class="text-gray-600 text-center mt-2">arhythmbox@gmail.com</p>
+                    </div>
+
+                   </div>
+                   <div class="w-full">
+                   <h2 class="text-gray-600">Send us a message</h2>
+                    <form action="{{ route('send.email') }}" method="POST" class="mt-3" id="contactForm"> @csrf
+                        <div>
+                            <x-input-label for="name" class="f-14" :value="__('Name')" />
+                            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="How can we address you?" />
+                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        </div>
+
+                        <!-- Email Address -->
+                        <div class="mt-3">
+                            <x-input-label for="email" :value="__('Email')" />
+                            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="email" placeholder="Email" />
+                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        </div>
+
+                        <!-- phone number -->
+                        <div class="mt-3">
+                            <x-input-label for="phone" :value="__('Message')" />
+                            <textarea id="request" class="block mt-1 w-full border-gray rounded" name="request" required placeholder="Message">{{ old('requests') }}</textarea>
+                            <x-input-error :messages="$errors->get('request')" class="mt-2" />
+                        </div>
+
+                        <div id="messageDiv" class="mt-3"></div>
+
+                        <div class="mt-6 flex items-center justify-between">
+
+                            <x-primary-button class="">
+                                {{ __('Send message') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                   </div>
+                </div>
+            </div>
+
         </div>
         </div>
 
         <script>
             document.addEventListener('DOMContentLoaded', (event) => {
-    // Get the modal
-    var modal = document.getElementById("aboutModal");
 
-    // Get the link that opens the modal
-    var btn = document.querySelector(".about-btn");
+                var modal = document.getElementById("aboutModal");
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+                var btn = document.querySelector(".about-btn");
 
-    // When the user clicks on the button, open the modal
-    btn.onclick = function(event) {
-        event.preventDefault();
-        modal.classList.add("show");
-        setTimeout(() => {
-            modal.style.display = "block";
-        }, 10); // Delay to ensure the transition is applied
-    }
+                var span = document.getElementsByClassName("close")[0];
 
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.classList.remove("show");
-        setTimeout(() => {
-            modal.style.display = "none";
-        }, 500); // Match the transition duration
-    }
+                btn.onclick = function(event) {
+                    event.preventDefault();
+                    modal.classList.add("show");
+                    setTimeout(() => {
+                        modal.style.display = "block";
+                    }, 10); 
+                }
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.classList.remove("show");
-            setTimeout(() => {
-                modal.style.display = "none";
-            }, 500); // Match the transition duration
-        }
-    }
-});
+                span.onclick = function() {
+                    modal.classList.remove("show");
+                    setTimeout(() => {
+                        modal.style.display = "none";
+                    }, 500);
+                }
+
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.classList.remove("show");
+                        setTimeout(() => {
+                            modal.style.display = "none";
+                        }, 500);
+                    }
+                }
+            });
+
+            $(document).ready(function() {
+                function toggleShakeAnimation(enableShake) {
+                    if (enableShake) {
+                        $('#contactButton').addClass('shaking');
+                    } else {
+                        $('#contactButton').removeClass('shaking');
+                    }
+                }
+
+                $('#contactButton').click(function() {
+                    $('#popup').slideDown();
+                    toggleShakeAnimation(false);
+                });
+
+                $('#closePopup').click(function() {
+                    $('#popup').slideUp();
+                    toggleShakeAnimation(true);
+                });
+
+                toggleShakeAnimation(true);
+            });
+
+            $(document).ready(function() {
+                $('#contactForm').submit(function(e) {
+                    e.preventDefault();
+                    var formData = $(this).serialize();
+                    var $submitButton = $(this).find('button[type="submit"]');
+                    var originalButtonText = $submitButton.html();
+                    $submitButton.prop('disabled', true).html('Sending...');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: $(this).attr('action'),
+                        data: formData,
+                        dataType: 'json',
+                        success: function(response) {
+                            $('#messageDiv').html('<p class="text-green-600">Message sent successfully. We will reach out to you shortly.</p>');
+                            $('#contactForm').trigger('reset');
+                        },
+                        error: function(xhr, status, error) {
+                            $('#messageDiv').html('<p class="text-red-600">Failed to send message. Please try again later.</p>');
+                        },
+                        complete: function() {
+                        $submitButton.prop('disabled', false).html(originalButtonText);
+                    }
+                    });
+                });
+            });
+ 
 
         </script>
     </body>

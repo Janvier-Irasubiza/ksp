@@ -1,7 +1,7 @@
     <x-app-layout>
         <x-slot name="header">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __(Auth::user()->type == 'AGT' ? 'My Applications' : 'Dashboard') }}
+                {{ __('My Applications') }}
             </h2>
         </x-slot>
 
@@ -12,6 +12,7 @@
                         <div class="table-responsive">
 
                         @if(Auth::user()->type == 'AGT')
+
                         <div class="card mb-4">
                             <div class="card-header-tab card-header py-3 d-flex items-center">
                                 <div class="card-header-title font-size-lg font-weight-normal col-lg-7">
@@ -39,31 +40,28 @@
                             </div>
                         </div>
 
-                        @endif
+                        <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
 
-                        @if(Auth::user()->type == 'AGT')
-                            <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+                            <!-- Primary Navigation Menu -->
+                            <div class="">
+                                <div class="flex justify-between h-16 border-b mb-4">
+                                    <div class="flex p-0">
 
-                                <!-- Primary Navigation Menu -->
-                                <div class="">
-                                    <div class="flex justify-between h-16 border-b mb-4">
-                                        <div class="flex p-0">
+                                        <!-- Navigation Links -->
+                                        <div class="space-x-8 sm:-my-px ms-4 sm:flex">
+                                            <x-nav-link :href="route('edu-apps')" :active="request()->routeIs('edu-apps') || request()->routeIs('dashboard')">
+                                                {{ __('Educational Apps' . '  (' . number_format(count($apps)) . ')') }}
+                                            </x-nav-link>
 
-                                            <!-- Navigation Links -->
-                                            <div class="space-x-8 sm:-my-px ms-4 sm:flex">
-                                                <x-nav-link :href="route('edu-apps')" :active="request()->routeIs('edu-apps') || request()->routeIs('dashboard')">
-                                                    {{ __('Educational Apps' . '  (' . number_format(count($apps)) . ')') }}
-                                                </x-nav-link>
-
-                                                <x-nav-link :href="route('mytalent')" :active="request()->routeIs('mytalent')">
-                                                    {{ __('My talent Apps' . '  (' . number_format($myTalentApps) . ')') }}
-                                                </x-nav-link>
-                                                
-                                            </div>
+                                            <x-nav-link :href="route('mytalent')" :active="request()->routeIs('mytalent')">
+                                                {{ __('My Talent Apps' . '  (' . number_format($myTalentApps) . ')') }}
+                                            </x-nav-link>
+                                            
                                         </div>
                                     </div>
                                 </div>
-                            </nav>
+                            </div>
+                        </nav>
 
                         @else
 
@@ -100,13 +98,16 @@
                             </form>
                         @endif
                         <div>
-                            
-                        @if(!Auth::user()-> type == 'AGT' )
-                            <a href="{{ route('apply') }}" class="btn btn-primary">New Application</a>
+
+                        @if(!Auth::user()->type == 'AGT')
+                            <a href="{{ route('apply') }}" class="btn btn-primary">New application</a>
+                        @else
+                            <!-- <a href="{{ route('mytalent-apply') }}" class="btn btn-primary">New application</a> -->
                         @endif
+
                         </div>
                         </div>
-                        @if(count($apps) > 0)
+                            @if(count($apps) > 0)
                             <table class="table align-middle mb-0 bg-white mt-4" id="" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>

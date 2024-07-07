@@ -150,6 +150,14 @@ h2 {
     background-color: #ffffff;
 }
 
+.f2 {
+    font-size: 2rem;
+}
+
+.f5 {
+    font-size: 5rem;
+}
+
 .f-6 {
     font-size: 6px;
 }
@@ -170,6 +178,18 @@ h2 {
     font-size: 12px;
 }
 
+.f-20 {
+    font-size: 20px;
+}
+
+.f-25 {
+    font-size: 25px;
+}
+
+.mb-8 {
+    margin-bottom: 4em;
+}
+
 ol {
     list-style-type: decimal !important;
 }
@@ -178,11 +198,114 @@ ol, ul {
     padding-left: 20px !important;
 }
 
+.wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1;
+}
+
+footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px) rotate(-5deg); }
+    50% { transform: translateX(5px) rotate(5deg); }
+    75% { transform: translateX(-5px) rotate(-5deg); }
+    100% { transform: translateX(0); }
+}
+
+.shaking {
+    animation: shake 5s ease-in-out infinite;
+}
+
+#contactButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+#contactButton:hover {
+    background-color: #f0f0f0;
+    color: #333;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
+}
+
+.popup {
+    position: fixed;
+    right: 8.5rem;
+    bottom: 3.5rem;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 5px;
+    display: none;
+    z-index: 1000;
+}
+
+input, select, textarea {
+    border: 1px solid #d9d9d9 !important;
+    border-radius: 5px !important;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+    border: 2px solid #b3d1ff !important;
+}
+
+.flex-section {
+    display: flex;
+}
+
+.file {
+    padding: 5px 10px;
+    background-color: #ccffe6;
+    border-radius: 3px;
+}
+
+.del {
+    color: #ff3333;
+    transition: color 0.3s ease;
+}
+
+.del:hover {
+    color: #d61d1d;
+}
+
 @media (max-width: 780px) {
+
+    .flex-section {
+        display: block;
+    }
+
     .about-btn {
         display: block;
     }
     .about {
         display: none;
+    }
+
+    .popup {
+        right: 0.5rem;
+        bottom: 3rem;
+        max-height: 35em;
+        overflow-y: auto;
     }
 }

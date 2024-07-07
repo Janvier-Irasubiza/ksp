@@ -18,10 +18,16 @@
             <form method="POST" action="{{ route('new-agent') }}">
                 @csrf
 
-                <!-- Name -->
                 <div>
-                    <x-input-label for="name" :value="__('Name')" />
-                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="names" />
+                    <x-input-label for="promo_code" :value="__('Promo code')" />
+                    <x-text-input id="promo_code" class="block mt-1 w-full" type="text" name="promo_code" :value="old('promo_code')" required autofocus autocomplete="promo_code" placeholder="Promo code" />
+                    <x-input-error :messages="$errors->get('promo_code')" class="mt-2" />
+                </div>
+
+                <!-- Name -->
+                <div class="mt-4">
+                    <x-input-label for="name" :value="__('Names')" />
+                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="Names" />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
@@ -36,12 +42,6 @@
                     <x-input-label for="phone" :value="__('Phone number')" />
                     <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autofocus autocomplete="phone" placeholder="Phone number" />
                     <x-input-error :messages="$errors->get('phone')" class="mt-2" />
-                </div>
-
-                <div class="mt-4">
-                    <x-input-label for="promo_code" :value="__('Promo code')" />
-                    <x-text-input id="promo_code" class="block mt-1 w-full" type="text" name="promo_code" :value="old('promo_code')" required autofocus autocomplete="promo_code" placeholder="Promo code" />
-                    <x-input-error :messages="$errors->get('promo_code')" class="mt-2" />
                 </div>
 
                 <div class="mt-4">

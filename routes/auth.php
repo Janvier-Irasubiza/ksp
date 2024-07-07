@@ -12,7 +12,11 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('add-agent', [RegisteredUserController::class, 'agent_form'])
+                ->middleware(['auth', 'verified'])
                 ->name('add-agent');
+
+Route::get('set-password/{token}', [RegisteredUserController::class, 'set_pass_form']) 
+                ->name('set-password');
 
 Route::post('new-agent', [RegisteredUserController::class, 'new_agent'])
                 ->name('new-agent');
