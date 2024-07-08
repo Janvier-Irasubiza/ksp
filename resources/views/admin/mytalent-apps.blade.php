@@ -137,7 +137,11 @@
                                         <td>{{ $app->phone }}</td>
                                         <td>{{ $app->talent_class }}</td>
                                         <td>{{ $app->created_at }}</td>
-                                        <td>{{ $app->promo_code != "" ? $app->promo_code : 'N/A' }}</td>
+                                        <td>
+                                            <a href="{{$app->promo_code != '' ? route('agent.info', ['agt'=>$app->promo_code]) : '#' }}" class="">
+                                                {{ $app->promo_code != "" ? $app->promo_code : 'N/A' }}
+                                            </a>
+                                        </td>
                                         <td>
                                         <span class="px-2 py-1 badge 
                                             {{ $app->status == 'Pending' ? 'badge-warning' : 

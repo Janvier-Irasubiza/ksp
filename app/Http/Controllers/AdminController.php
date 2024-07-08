@@ -38,6 +38,7 @@ class AdminController extends Controller
     }
 
     public function agents(Request $request) : view {
+
         $query = $request->get('key');
         $agents = User::where('type', 'AGT')
                         ->where(function($q) use ($query) {
@@ -48,6 +49,13 @@ class AdminController extends Controller
                         ->paginate(10);
 
         return view('admin.agents', compact('agents'));
+    }
+
+    public function agent($promo_code) : view {
+        $agent = User::where('promo_code', $promo_code)->first();
+        $balance = MyTalent::where('promo_code', $promo_code)->sum('agent_part');
+        $balance += Application::where('promo_code', $promo_code)->sum('agent_part');
+        return view('admin.agent-info', compact('agent', 'balance'));
     }
 
     public function my_apps(Request $request) : view {

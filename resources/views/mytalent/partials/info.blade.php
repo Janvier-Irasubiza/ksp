@@ -1,4 +1,7 @@
+      <div class="flex justify-between">
         <h1>MY TALENT REGISTRATION FORM</h1>
+        <span class="close">&times;</span>
+      </div>
 
         <p class="mt-2"> KSP Rwanda is proud to present "My Talent," an exciting talent competition designed to showcase the skills and passion of the youth in various creative fields. We believe in nurturing and empowering young talent, providing them with a platform to express themselves and pursue their dreams. This competition aims to bring together talented individuals from different departments, including</p>
 
@@ -53,7 +56,7 @@
         <p class="mt-4 underline fw">WINNERS WILL BE REWORDED</p>
         <ol>
             <li class="fw">Solo=== Up to 500,000 (FRW)</li>
-            <li class="fw">Group== up to 700,000 (FRW)</li>
+            <li class="fw">Group== up to 1,000,000 (FRW)</li>
             <li class="fw">Both will win for Scholarships</li>
             <li class="fw">Both will win for Production Support and Promotion</li>
         </ol>

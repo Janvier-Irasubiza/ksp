@@ -1,7 +1,7 @@
 <form method="POST" action="{{ route('mytalent-submit-app') }}" class="w-full" enctype="multipart/form-data">
         <div class="flex justify-content-between align-items-center">
-            <div><h1>APPLY</h1></div>
-            <div><a href="" class="f-12 fw underline about-btn">ABOUT APPLICATION</a></div>
+            <div><h1>REGISTER HERE</h1></div>
+            <div><a href="" class="f-12 fw underline about-btn">ABOUT IT</a></div>
         </div>
             @csrf
         <div class="mt-4">
@@ -44,8 +44,17 @@
 
             <div class="mt-6">
                 <x-input-label for="phone" :value="__('District')" />
-                <small>Akarere uri gukoreramo application</small>
-                <x-text-input id="district" class="block mt-1 w-full" type="text" name="district" :value="old('district')" required autocomplete="district"  placeholder="District"/>
+                <small>Akarere utuyemo</small>
+                <select name="district" id="district" class="w-full" required>
+                    <option value="">------------</option>
+                    @foreach ($provinces as $province => $districts)
+                        <optgroup label="{{ $province }}">
+                            @foreach ($districts as $district)
+                                <option value="{{ $district }}">{{ $district }}</option>
+                            @endforeach
+                        </optgroup>
+                    @endforeach
+                </select>
                 <x-input-error :messages="$errors->get('district')" class="mt-2" />
             </div>
 
@@ -97,7 +106,7 @@
                 <x-input-label for="group" :value="__('Group Application')" />
                 <small>If is group application, 
                 Group application should make group coversheet filled by the Group leader.Group leader may full fill the all names of group members and their duties. Allowed to be filled is PDF,EXCEL or DOCX</small>
-                <x-text-input id="group_app" class="block mt-2 w-full" type="file" name="group_app" :value="old('group_app')" required autocomplete="group_app" />
+                <x-text-input id="group_app" class="block mt-2 w-full" type="file" name="group_app" :value="old('group_app')" autocomplete="group_app" />
                 <x-input-error :messages="$errors->get('group_app')" class="mt-2" />
             </div>
 

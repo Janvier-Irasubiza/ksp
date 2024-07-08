@@ -49,7 +49,7 @@
                                     <td>{{ $agent->phone }}</td>
                                     <td>{{ $agent->email }}</td>
                                     <td>{{ $agent->address }}</td>
-                                    <td><a href="">View Details</a></td>
+                                    <td><a href="{{ route('agent.info', ['agt'=>$agent->promo_code]) }}">View Details</a></td>
                                 </tr>
                                 @endforeach
                             </tbody>

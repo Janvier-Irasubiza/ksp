@@ -12,15 +12,33 @@ use App\Mail\AppApproved;
 use App\Mail\AppDenied;
 use App\Mail\ClientNotAvailable;
 use Mail;
+use Auth;
 
 class MyTalentController extends Controller
 {
     public function apply_form() : View {
-        return view('mytalent.apply');
+
+        $provinces = [
+            'City of Kigali' => ['Nyarugenge', 'Kicukiro', 'Gasabo'],
+            'Eastern Province' => ['Nyagatare', 'Gatsibo', 'Kayonza', 'Rwamagana', 'Bugesera', 'Ngoma', 'Kirehe'],
+            'Northern Province' => ['Rulindo', 'Gakenke', 'Musanze', 'Burera', 'Gicumbi'],
+            'Southern Province' => ['Kamonyi', 'Muhanga', 'Ruhango', 'Nyanza', 'Huye', 'Nyamagabe', 'Gisagara', 'Nyaruguru'],
+            'Western Province' => ['Nyamasheke', 'Rusizi', 'Karongi', 'Ngororero', 'Rutsiro', 'Rubavu', 'Nyabihu'],
+        ];
+
+        return view('mytalent.apply', compact('provinces'));
     }
 
     public function mytalent_apply() : view {
-        return view('agents.mytalent-apply');
+
+        $provinces = [
+            'City of Kigali' => ['Nyarugenge', 'Kicukiro', 'Gasabo'],
+            'Eastern Province' => ['Nyagatare', 'Gatsibo', 'Kayonza', 'Rwamagana', 'Bugesera', 'Ngoma', 'Kirehe'],
+            'Northern Province' => ['Rulindo', 'Gakenke', 'Musanze', 'Burera', 'Gicumbi'],
+            'Southern Province' => ['Kamonyi', 'Muhanga', 'Ruhango', 'Nyanza', 'Huye', 'Nyamagabe', 'Gisagara', 'Nyaruguru'],
+            'Western Province' => ['Nyamasheke', 'Rusizi', 'Karongi', 'Ngororero', 'Rutsiro', 'Rubavu', 'Nyabihu'],
+        ];
+        return view('agents.mytalent-apply', compact('provinces'));
     }
 
     public function mytalent_submit_app(Request $request) {
@@ -83,7 +101,12 @@ class MyTalentController extends Controller
                 '+250 785 478 665',
             ));
     
-            return back()->with('status', 'Application submitted successfully');
+            if(!Auth::user()) {
+                return redirect()->route('applied');
+            } else {
+                return back()->with('status', 'Application submitted successfully');
+            }
+            
         } catch (\Exception $e) {
             \Log::error('Application submission failed: ' . $e->getMessage());
             return redirect()->back()->withInput()->with(['error' => 'Failed to submit application.']);
@@ -98,7 +121,12 @@ class MyTalentController extends Controller
         $group_app_sheet = preg_replace($pattern, '', $app->group_app_sheet, 1);
         $receipt = preg_replace($pattern, '', $app->receipt, 1);
 
-        return view('admin.mytalent-app', compact('app', 'group_app_sheet', 'receipt'));
+        $agent = null;
+        if ($app->promo_code != "") {
+            $agent = User::where('promo_code', $app->promo_code)->first();
+        }
+
+        return view('admin.mytalent-app', compact('app', 'group_app_sheet', 'receipt', 'agent'));
     }
 
     public function update(Request $request, $id) {

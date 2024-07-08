@@ -27,8 +27,8 @@
                         <div class="mb-4 flex justify-between items-center gap-2">
                             <div>
                                 <h1>{{ $app->names }}</h1>
-                                <h2 class="mt-1">{{ $app->phone }}</h2>
-                                <h2 class="mt-1">{{ $app->email }}</h2>
+                                <h2 class="mt-1">Phone: {{ $app->phone }}</h2>
+                                <h2 class="mt-1">Email: {{ $app->email }}</h2>
                             </div>
                             
                                 <div class="flex items-center gap-3">
@@ -203,6 +203,24 @@
                                             </div> -->
                                         </div>    
                                     </div>
+
+                                    @if($agent)
+                                    <div class="mgn ">
+                                        <h2 class="mb-2">Agent</h2>
+                                        <a href="{{ route('agent.info', ['agt'=>$app->promo_code]) }}" class="">
+                                            <div class="border rounded p-3 d-flex justify-between items-center">
+                                                <div class="">
+                                                {{ $agent-> name }}  <br>
+                                                <p class="text-muted mb-0">Email: {{ $agent->email }} </p>
+                                                <p class="text-muted mb-0">Phone: {{ $agent->phone }}</p>
+                                                </div>
+                                                <div class="">
+                                                <p class="text-muted mb-0 mt-3">Promo code: {{ $agent->promo_code }}</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    @endif
                             </div>
 
                         </div>
