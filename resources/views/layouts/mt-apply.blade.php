@@ -27,7 +27,7 @@
         <div class="flex flex-col sm:justify-center items-center">
                 <div class="w-90 flex justify-center items-center gap-10 sm-mb-8">
 
-                    <img src="{{ asset('images/mytalent_logo.svg') }}" class="mt-sm-w"  alt="">
+                    <img src="{{ asset('images/mytalent.svg') }}" class="mt-sm-w"  alt="">
                     <img src="{{ asset('images/logo_ksp.svg') }}" class="ksp-sm-w" alt="">
 
                 </div>
