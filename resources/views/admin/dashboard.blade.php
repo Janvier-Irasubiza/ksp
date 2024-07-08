@@ -119,6 +119,8 @@
                                         <th>Certificate</th>
                                         <th>Receipt</th>
                                         <th>Applied on</th>
+                                        <th>Agent</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -132,6 +134,8 @@
                                         <th>Certificate</th>
                                         <th>Receipt</th>
                                         <th>Applied on</th>
+                                        <th>Agent</th>
+                                        <th>Status</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -146,6 +150,19 @@
                                         <td><a href="{{ asset($app->certificate) }}">View Certificate</a></td>
                                         <td><a href="{{ asset($app->receipt) }}">View Receipt</a></td>
                                         <td>{{ $app->created_at }}</td>
+                                        <td>{{ $app->promo_code != "" ? $app->promo_code : 'N/A' }}</td>
+                                        <td><span class="px-2 py-1 badge 
+                                            {{ $app->status == 'Pending' ? 'badge-warning' : 
+                                                ($app->status == 'Denied' ? 'badge-danger' : 'badge-success') }}">
+                                            {{ $app->status }}
+                                        </span> <br>
+
+                                            @if($app->unavailable == 'yes')
+                                                <span class="px-2 py-1 badge badge-secondary">
+                                                    Was not awailable
+                                                </span>
+                                            @endif
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

@@ -112,6 +112,8 @@
                                         <th>Email</th>
                                         <th>Talent class</th>
                                         <th>Applied on</th>
+                                        <th>Agent</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -122,6 +124,8 @@
                                         <th>Email</th>
                                         <th>Talent class</th>
                                         <th>Applied on</th>
+                                        <th>Agent</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -133,6 +137,21 @@
                                         <td>{{ $app->phone }}</td>
                                         <td>{{ $app->talent_class }}</td>
                                         <td>{{ $app->created_at }}</td>
+                                        <td>{{ $app->promo_code != "" ? $app->promo_code : 'N/A' }}</td>
+                                        <td>
+                                        <span class="px-2 py-1 badge 
+                                            {{ $app->status == 'Pending' ? 'badge-warning' : 
+                                                ($app->status == 'Denied' ? 'badge-danger' : 'badge-success') }}">
+                                            {{ $app->status }}
+                                        </span> <br>
+
+                                            @if($app->unavailable == 'yes')
+                                                <span class="px-2 py-1 badge badge-secondary">
+                                                    Was not awailable
+                                                </span>
+                                            @endif
+
+                                        </td>
                                         <td><a href="{{ route('app', ['app' => $app->app_id]) }}">More details</a></td>
                                     </tr>
                                     @endforeach

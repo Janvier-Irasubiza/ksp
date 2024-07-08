@@ -24,7 +24,9 @@ class Application extends Model
         'receipt',
         'promo_code',
         'agent_part',
-        'status'
+        'status',
+        'unavailable',
+        'note'
     ];
 
     protected static function boot() {

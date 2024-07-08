@@ -4,18 +4,54 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
 
-                        <div class="mb-4 flex justify-between items-center">
+                        @if(session('sent'))
+                            <div class="py-2 px-3 bg-green-200 text-green-900 mb-4 rounded-md" style="background: #1affa3">
+                                {{ session('sent') }}
+                            </div>
+                        @endif
+
+                        @if(session('error_sending'))
+                            <div class="py-2 px-3 bg-green-200 text-green-900 mb-4 rounded-md color-white" style="background: #ff4d4d">
+                                {{ session('error_sending') }}
+                            </div>
+                        @endif
+
+                        @if($app->unavailable == 'yes')
+                            <div class="mb-4 flex justify-end items-center gap-2">
+                                <span class="f-16 px-3 py-2 badge badge-secondary">
+                                    Contacted, but was not awailable
+                                </span>
+                            </div>
+                        @endif
+
+                        <div class="mb-4 flex justify-between items-center gap-2">
                             <div>
                                 <h1>{{ $app->names }}</h1>
                                 <h2 class="mt-1">{{ $app->phone }}</h2>
                                 <h2 class="mt-1">{{ $app->email }}</h2>
                             </div>
-                            @if(!Auth::user()->type == 'AGT')
+                            
                                 <div class="flex items-center gap-3">
-                                    <a href="" class="btn btn-primary fw">APPROVE APPLICATION</a>
-                                </div>
-                            @endif
+                                    <span class="f-16 px-3 py-2 badge 
+                                        {{ $app->status == 'Pending' ? 'badge-warning' : 
+                                            ($app->status == 'Denied' ? 'badge-danger' : 'badge-success') }}">
+                                        {{ $app->status }}
+                                    </span>
+
+                                    @if(!Auth::user()->type == 'AGT' && $app->status != 'Approved')
+
+                                    <a href="{{ route('mytalent.approve-app', ['app'=> $app->app_id]) }}" class="btn btn-primary f-14 fw">APPROVE APPLICATION</a>
+                                    <button class="btn btn-danger f-14 fw" data-bs-toggle="modal" data-bs-target="#denyApplicationModal" id="denyApplicationButton">DENY APPLICATION</button>
+                                    @endif
+
+                                </div>                            
                         </div>
+
+                        @if($app->note != "")
+                            <div class="py-2 px-3 alert alert-danger mt-3 mb-4 rounded-md">
+                                Reason for denial: {{ $app->note }}
+                            </div>
+                        @endif
 
                         <div class="flex-section gap-5">
 
@@ -34,7 +70,7 @@
                                     </div>
                                 @endif
                             
-                                <form method="POST" action="{{ route('mytalent.update', ['id'=>$app->app_id ]) }}" class="w-full" enctype="multipart/form-data">
+                                <form method="POST" action="{{ route('mytalent.update', ['id'=>$app->app_id ]) }}" class="w-full mb-4" enctype="multipart/form-data">
                                         @method('PUT')
                                         @csrf
                                     <div class="mt-4">
@@ -171,14 +207,68 @@
 
                         </div>
 
-                        @if(!Auth::user()->type == 'AGT')
+                        @if(!Auth::user()->type == 'AGT' && $app->status != 'Approved')
                             <div class="mt-8 flex justify-end gap-3">
-                                <a href="" class="btn btn-info">Mark unrechable</a>
-                                <a href="" class="btn btn-danger">Delete Application</a>
+                                <a href="{{ route('unreachable', ['app'=> $app->app_id]) }}" class="btn btn-info">Mark unrechable</a>
+                                <!-- <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteApplication" id="deleteApplicationButton">Delete Application</button> -->
                             </div>
                         @endif
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="custom-modal" id="denyApplicationModal">
+            <div class="custom-modal-dialog">
+                <div class="custom-modal-content">
+                    <div class="custom-modal-header mb-3">
+                        <h5 class="custom-modal-title mb-3">Deny Application</h5>
+                        <button type="button" class="custom-close" id="closeModal">&times;</button>
+                    </div>
+                    <div class="custom-modal-body">
+                        Are you sure you want to deny this application?
+                    </div>
+                    <form action="{{ route('mytalent.deny', ['app'=>$app->app_id]) }}" method="post" class="mt-3">
+                        @csrf
+                        @method('put')
+                        <div class="">
+                            <x-input-label for="phone" :value="__('Reason of denial')" />
+                            <textarea id="request" class="block mt-1 w-full border-gray rounded" name="reason" required placeholder="Enter Reason of denial">{{ old('reason') }}</textarea>
+                            <x-input-error :messages="$errors->get('reason')" class="mt-2" />
+                        </div>
+                        <div class="custom-modal-footer">
+                            <button type="button" class="custom-btn custom-btn-secondary" id="cancelDeny">Close</button>
+                            <button type="submit" class="custom-btn custom-btn-danger">Deny</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="custom-modal" id="deleteApplication">
+            <div class="custom-modal-dialog">
+                <div class="custom-modal-content">
+                    <div class="custom-modal-header mb-3">
+                        <h5 class="custom-modal-title mb-3">Delete Application</h5>
+                        <button type="button" class="custom-close" id="closeModal">&times;</button>
+                    </div>
+                    <div class="custom-modal-body">
+                        <p>Are you sure you want to delete this application?</p> 
+                        <p class="mt-4">Note that this action is ireversible</p> 
+                    </div>
+                    <form action="{{ route('mytalent.delete', ['app'=>$app->id]) }}" class="mt-3" method="post">
+                        @csrf
+                        @method('delete')
+                        <div class="custom-modal-footer">
+                            <button type="button" class="custom-btn custom-btn-secondary" id="cancelDelete">Close</button>
+                            <button type="submit" class="custom-btn custom-btn-danger">Yes, Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </x-app-layout>

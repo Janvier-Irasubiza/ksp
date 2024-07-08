@@ -10,11 +10,13 @@
                                 <h2 class="mt-1">{{ $app->phone }}</h2>
                                 <h2 class="mt-1">{{ $app->email }}</h2>
                             </div>
-                            @if(!Auth::user()->type == 'AGT')
+
+                            @if(!Auth::user()->type == 'AGT' && $app->status !== 'Pending')
                                 <div class="flex items-center gap-3">
                                     <a href="" class="btn btn-primary fw">APPROVE APPLICATION</a>
                                 </div>
                             @endif
+                            
                         </div>
 
                         <div class="flex-section gap-5">

@@ -1,7 +1,7 @@
     <x-app-layout>
         <x-slot name="header">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('My Applications') }}
+            {{ __(Auth::user()->type == "AGT" ? 'My Applications' : 'Applications') }}
             </h2>
         </x-slot>
 
@@ -100,7 +100,7 @@
                         <div>
 
                         @if(!Auth::user()->type == 'AGT')
-                            <a href="{{ route('apply') }}" class="btn btn-primary">New application</a>
+                            <a href="{{ route('apply') }}" class="btn btn-primary">New Application</a>
                         @else
                             <!-- <a href="{{ route('mytalent-apply') }}" class="btn btn-primary">New application</a> -->
                         @endif
@@ -120,6 +120,8 @@
                                         <th>Certificate</th>
                                         <th>Receipt</th>
                                         <th>Applied on</th>
+                                        <th>Agent</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -133,6 +135,8 @@
                                         <th>Certificate</th>
                                         <th>Receipt</th>
                                         <th>Applied on</th>
+                                        <th>Agent</th>
+                                        <th>Status</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -147,6 +151,20 @@
                                         <td><a href="{{ asset($app->certificate) }}">View Certificate</a></td>
                                         <td><a href="{{ asset($app->receipt) }}">View Receipt</a></td>
                                         <td>{{ $app->created_at }}</td>
+                                        <td>{{ $app->promo_code != "" ? $app->promo_code : 'N/A' }}</td>
+                                        <td>
+                                        <span class="px-2 py-1 badge 
+                                            {{ $app->status == 'Pending' ? 'badge-warning' : 
+                                                ($app->status == 'Denied' ? 'badge-danger' : 'badge-success') }}">
+                                            {{ $app->status }}
+                                        </span> <br>
+
+                                            @if($app->unavailable == 'yes')
+                                                <span class="px-2 py-1 badge badge-secondary">
+                                                    Was not awailable
+                                                </span>
+                                            @endif
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

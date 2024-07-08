@@ -28,7 +28,9 @@ class MyTalent extends Model
         'receipt',
         'promo_code',
         'agent_part',
-        'status'
+        'unavailable',
+        'status',
+        'note'
     ];
 
     protected static function boot() {

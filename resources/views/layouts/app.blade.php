@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="{{ asset('styles.css') }}?v={{ filemtime(public_path('styles.css')) }}">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -137,6 +138,24 @@
                 });
 
                 toggleShakeAnimation(true);
+
+                $('#denyApplicationButton').click(function(e) {
+                    e.preventDefault();
+                    $('#denyApplicationModal').fadeIn();
+                });
+
+                $('#closeModal, #cancelDeny').click(function() {
+                    $('#denyApplicationModal').fadeOut();
+                });
+
+                $('#deleteApplicationButton').click(function(e) {
+                    e.preventDefault();
+                    $('#deleteApplication').fadeIn();
+                });
+
+                $('#closeModal, #cancelDelete').click(function() {
+                    $('#deleteApplication').fadeOut();
+                });
             });
 
             $(document).ready(function() {

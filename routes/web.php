@@ -32,6 +32,11 @@ Route::get('/my-apps', [AdminController::class, 'my_apps'])->middleware(['auth',
 Route::post('/mytalent-submit-app', [MyTalentController::class, 'mytalent_submit_app'])->middleware(['auth', 'verified'])->name('mytalent-submit-app');
 Route::get('/app/{app}', [MyTalentController::class, 'app_info'])->middleware(['auth', 'verified'])->name('app');
 Route::put('/mytalent/{id}', [MyTalentController::class, 'update'])->middleware(['auth', 'verified'])->name('mytalent.update');
+Route::get('/mytalent/approve/{app}', [MyTalentController::class, 'mytalent_approve_app'])->middleware(['auth', 'verified'])->name('mytalent.approve-app');
+Route::get('/unreachable/{app}', [MyTalentController::class, 'unreachable'])->middleware(['auth', 'verified'])->name('unreachable');
+Route::put('/mytalent/deny/{app}', [MyTalentController::class, 'deny'])->middleware(['auth', 'verified'])->name('mytalent.deny');
+Route::delete('/mytalent/delete/{app}', [MyTalentController::class, 'delete'])->middleware(['auth', 'verified'])->name('mytalent.delete');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
