@@ -33,7 +33,7 @@
 
                                         <div class="icon-wrapper d-flex align-items-center justify-content-center">
                                             <div class="icon-wrapper-bg opacity-9 rounded-circle" style="background: #80ffaa; padding: 15px 17px">
-                                                <i class="fa-solid fa-sack-dollar" style="font-size: 25px"></i>
+                                                <i  class="fa-solid fa-wallet" style="font-size: 25px"></i>
                                             </div>
                                         </div>
 
