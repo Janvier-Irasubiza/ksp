@@ -79,7 +79,7 @@
                                                 </x-nav-link>
 
                                                 <x-nav-link :href="route('admin.mytalent')" :active="request()->routeIs('admin.mytalent')">
-                                                    {{ __('My talent Apps' . '  (' . number_format($myTalentApps) . ')') }}
+                                                    {{ __('My Talent Apps' . '  (' . number_format($myTalentApps) . ')') }}
                                                 </x-nav-link>
                                                 
                                             </div>
