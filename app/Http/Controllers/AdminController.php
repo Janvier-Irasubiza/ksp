@@ -169,7 +169,7 @@ class AdminController extends Controller
 
     public function mytalent_apps(Request $request) {
         $user = Auth::user();
-        $EduApps = Application::count();
+        $EduApps = Application::query();
         $myTalentQuery = MyTalent::query();
     
         $query = $request->get('key');
@@ -189,10 +189,10 @@ class AdminController extends Controller
         }
     
         if ($user->type == 'BS') {
-            $apps = $appsQuery->where('status', 'Approved')->get();
+            $apps = $EduApps->where('status', 'Approved')->get();
             $myTalentApps = $myTalentQuery->where('status', 'Approved')->count();
             $pendingApps = $appsQuery->where('status', 'Pending')->count();
-    
+
             $appsRev = count($apps) * 2000;
             $mtAppsRev = $myTalentApps * 10000;
             $appsBal = (($user->percentage / 2) * $appsRev) / 100;
