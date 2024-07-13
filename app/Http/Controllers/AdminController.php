@@ -12,30 +12,46 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function index(Request $request) : \Illuminate\View\View {
+    public function index(Request $request) : View {
         $user = Auth::user();
-        
         $query = $request->get('key');
-        $appsQuery = Application::query();
-        
-        $myTalentApps = MyTalent::count();;
         $balance = 0;
+        $appsBal = 0;
+        $pendingApps = 0;
     
-        if ($user->type == 'AGT') {
-            $appsQuery->where('promo_code', $user->promo_code);
-            $myTalentApps = MyTalent::where('promo_code', $user->promo_code)->count();
-            $balance = MyTalent::where('promo_code', $user->promo_code)->sum('agent_part');
+        $appsQuery = Application::query();
+        $myTalentQuery = MyTalent::query();
+    
+        if ($query) {
+            $appsQuery->where(function($q) use ($query) {
+                $q->where('names', 'like', '%'.$query.'%')
+                  ->orWhere('email', 'like', '%'.$query.'%')
+                  ->orWhere('phone', 'like', '%'.$query.'%');
+            });
         }
     
-        $apps = $appsQuery->where(function($q) use ($query) {
-                    $q->where('names', 'like', '%'.$query.'%')
-                      ->orWhere('email', 'like', '%'.$query.'%')
-                      ->orWhere('phone', 'like', '%'.$query.'%');
-                 })
-                 ->paginate(10);
+        if ($user->type == 'AGT') {
+            $apps = $appsQuery->where('promo_code', $user->promo_code)->paginate(10);
+            $myTalentApps = $myTalentQuery->where('promo_code', $user->promo_code)->count();
+            $balance = $myTalentQuery->where('promo_code', $user->promo_code)->where('status', 'Approved')->sum('agent_part');
+        } elseif ($user->type == 'BS') {
+            $apps = $appsQuery->where('status', 'Approved')->get();
+            $myTalentApps = $myTalentQuery->where('status', 'Approved')->count();
+            $pendingApps = $appsQuery->where('status', 'Pending')->count();
     
-        return view('admin.dashboard', compact('apps', 'myTalentApps', 'balance'));
+            $appsRev = count($apps) * 2000;
+            $mtAppsRev = $myTalentApps * 10000;
+            $appsBal = (($user->percentage / 2) * $appsRev) / 100;
+            $mtAppsBal = ($user->percentage * $mtAppsRev) / 100;
+            $balance = $appsBal + $mtAppsBal;
+        } else {
+            $apps = $appsQuery->paginate(10);
+            $myTalentApps = $myTalentQuery->count();
+        }
+    
+        return view('admin.dashboard', compact('apps', 'myTalentApps', 'pendingApps', 'appsBal', 'balance'));
     }
+    
 
     public function agents(Request $request) : view {
 
@@ -95,7 +111,7 @@ class AdminController extends Controller
         if ($user->type == 'AGT') {
             $appsQuery->where('promo_code', $user->promo_code);
             $myTalentApps = MyTalent::where('promo_code', $user->promo_code)->count();
-            $balance = MyTalent::where('promo_code', $user->promo_code)->sum('agent_part');
+            $balance = MyTalent::where('status', 'Approved')->where('promo_code', $user->promo_code)->sum('agent_part');
         }
     
         $apps = $appsQuery->where(function($q) use ($query) {
@@ -138,7 +154,7 @@ class AdminController extends Controller
             $appsQuery->where('promo_code', $user->promo_code);
             $EduApps = Application::where('promo_code', $user->promo_code)->count();
             $myTalentApps = MyTalent::where('promo_code', $user->promo_code)->count();
-            $balance = MyTalent::where('promo_code', $user->promo_code)->sum('agent_part');
+            $balance = MyTalent::where('status', 'Approved')->where('promo_code', $user->promo_code)->sum('agent_part');
         }
     
         $apps = $appsQuery->where(function($q) use ($query) {
@@ -151,21 +167,43 @@ class AdminController extends Controller
         return view('admin.mytalent-apps', compact('apps', 'EduApps', 'myTalentApps', 'balance'));
     }
 
-    public function mytalent_apps(Request $request) : view {
+    public function mytalent_apps(Request $request) {
         $user = Auth::user();
         $EduApps = Application::count();
-        $myTalentApps = MyTalent::count();;
+        $myTalentQuery = MyTalent::query();
     
         $query = $request->get('key');
         $appsQuery = MyTalent::query();
+
+        $balance = 0;
+        $appsBal = 0;
+        $mtAppsBal = 0;
+        $pendingApps = 0;
     
-        $apps = $appsQuery->where(function($q) use ($query) {
-                    $q->where('names', 'like', '%'.$query.'%')
-                      ->orWhere('email', 'like', '%'.$query.'%')
-                      ->orWhere('phone', 'like', '%'.$query.'%');
-                 })
-                 ->paginate(10);
+        if ($query) {
+            $appsQuery->where(function($q) use ($query) {
+                $q->where('names', 'like', '%' . $query . '%')
+                  ->orWhere('email', 'like', '%' . $query . '%')
+                  ->orWhere('phone', 'like', '%' . $query . '%');
+            });
+        }
     
-        return view('admin.mytalent-apps', compact('apps', 'EduApps', 'myTalentApps'));
+        if ($user->type == 'BS') {
+            $apps = $appsQuery->where('status', 'Approved')->get();
+            $myTalentApps = $myTalentQuery->where('status', 'Approved')->count();
+            $pendingApps = $appsQuery->where('status', 'Pending')->count();
+    
+            $appsRev = count($apps) * 2000;
+            $mtAppsRev = $myTalentApps * 10000;
+            $appsBal = (($user->percentage / 2) * $appsRev) / 100;
+            $mtAppsBal = ($user->percentage * $mtAppsRev) / 100;
+            $balance = $appsBal + $mtAppsBal;
+        } else {
+            $apps = $appsQuery->paginate(10);
+            $myTalentApps = $myTalentQuery->count();
+        }
+
+        return view('admin.mytalent-apps', compact('apps', 'EduApps', 'myTalentApps', 'balance', 'pendingApps', 'appsBal', 'mtAppsBal'));
     }
+    
 }

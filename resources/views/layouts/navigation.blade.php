@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     
-                    @if(!Auth::user()->type == "AGT")
+                    @if(!(Auth::user()->type == "AGT" || Auth::user()->type == "BS"))
                         <x-nav-link :href="route('agents')" :active="request()->routeIs('agents')">
                             {{ __('Agents') }}
                         </x-nav-link>

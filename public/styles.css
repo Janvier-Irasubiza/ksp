@@ -273,7 +273,7 @@ h2 {
 }
 
 .mb-8 {
-    margin-bottom: 4em;
+    margin-bottom: 5em;
 }
 
 .sm-mb-8 {
@@ -380,7 +380,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .mt-sm-w{
-    width: 8em;
+    width: 100px;
 }
 
 .ksp-sm-w {

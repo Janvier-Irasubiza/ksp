@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
+    <form method="POST" action="{{ route('password.set') }}">
         @csrf
 
         <!-- Password Reset Token -->
@@ -12,10 +12,18 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- Email Address -->
+        <div  class="mt-4">
+            <x-input-label for="phone" :value="__('Payment Phone Numbe')" />
+            <small>Phone number which we will use to pay you</small>
+            <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" autofocus required autocomplete="phone" placeholder="Enter Phone number" />
+            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autofocus autocomplete="new-password" placeholder="Create your password" />
+            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" placeholder="Create your password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 

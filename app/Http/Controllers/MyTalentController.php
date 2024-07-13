@@ -166,6 +166,12 @@ class MyTalentController extends Controller
     
         if ($app) {
             $app->status = "Approved";
+
+            if ($app->promo_code) {
+                $app->agent_part = 1000;
+            }    
+
+            $app->unavailable = null;
             $app->save();
 
             Mail::to($app->email)->send(new AppApproved(
