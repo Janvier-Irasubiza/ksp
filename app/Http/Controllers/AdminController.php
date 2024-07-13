@@ -169,7 +169,8 @@ class AdminController extends Controller
 
     public function mytalent_apps(Request $request) {
         $user = Auth::user();
-        $EduApps = Application::query();
+        $EdApps = Application::query();
+        $EduApps = $EdApps->count();
         $myTalentQuery = MyTalent::query();
     
         $query = $request->get('key');
@@ -189,7 +190,7 @@ class AdminController extends Controller
         }
     
         if ($user->type == 'BS') {
-            $apps = $EduApps->where('status', 'Approved')->get();
+            $apps = $EdApps->where('status', 'Approved')->get();
             $myTalentApps = $myTalentQuery->where('status', 'Approved')->count();
             $pendingApps = $appsQuery->where('status', 'Pending')->count();
 
