@@ -7,10 +7,6 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
 
-Route::get('/timezone', function () {
-    return Carbon::now()->toDateTimeString();
-});
-
 Route::get('/', function () {
     return to_route('login');
 });
