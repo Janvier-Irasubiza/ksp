@@ -25,15 +25,15 @@
     <body class="font-sans text-gray-900 antialiased">    
         <div class="min-h-screen w-100 flex mt-6 mb-6 flex-col sm:justify-center items-center sm:pt-0 bg-gray-100">
         <div class="flex flex-col sm:justify-center items-center">
-            <div class="w-90 flex justify-center items-center gap-10 sm-mb-8">
-                <img src="{{ asset('images/mytalent.png') }}" alt="">
+            <div class="w-90 flex-section justify-center items-center gap-10 sm-mb-8">
+                <img src="{{ asset('images/mytalent_logo.png') }}" class="mt-sm-w mb-4" alt="">
                 <div class="text-center">
                     <h1>INITIATED BY</h1>
                     <img src="{{ asset('images/logo_ksp.png') }}" class="ksp-sm-w mt-4" alt="">
                 </div>
             </div>
 
-            <div class="w-90 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg mb-8">
+            <div class="w-90 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg mt-4 mb-8">
                 {{ $slot }}
             </div>
 

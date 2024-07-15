@@ -11,6 +11,10 @@ Route::get('/', function () {
     return to_route('login');
 });
 
+Route::get('img', function () {
+    return view('components.mytalent-logo');
+});
+
 Route::get('/apply', [ApplicationsController::class, 'apply'])->name('apply');
 Route::post('/submit_app', [ApplicationsController::class, 'submit_app'])->name('submit-app');
 Route::get('/success', [ApplicationsController::class, 'applied'])->name('applied');

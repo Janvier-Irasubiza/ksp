@@ -380,7 +380,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .mt-sm-w{
-    width: 150px;
+    width: 350px;
 }
 
 .mt-sm-w img {
@@ -416,7 +416,7 @@ input:focus, select:focus, textarea:focus {
     }
 
     .mt-sm-w{
-        width: 4em;
+        width: 10em;
     }
 
     .ksp-sm-w {
