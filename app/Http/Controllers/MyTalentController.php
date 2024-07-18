@@ -27,7 +27,7 @@ class MyTalentController extends Controller
         ];
 
         $locations = [
-            'City of Kigali' => ['Nyarugenge', 'Kicukiro', 'Gasabo'],
+            'City of Kigali' => ['Kigali'],
             'Eastern Province' => ['Nyagatare', 'Kayonza'],
             'Northern Province' => ['Musanze','Gicumbi'],
             'Southern Province' => ['Muhanga', 'Huye'],
@@ -48,7 +48,7 @@ class MyTalentController extends Controller
         ];
 
         $locations = [
-            'City of Kigali' => ['Nyarugenge', 'Kicukiro', 'Gasabo'],
+            'City of Kigali' => ['Kigali'],
             'Eastern Province' => ['Nyagatare', 'Kayonza'],
             'Northern Province' => ['Musanze','Gicumbi'],
             'Southern Province' => ['Muhanga', 'Huye'],
