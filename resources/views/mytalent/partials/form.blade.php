@@ -50,7 +50,7 @@
                     @foreach ($provinces as $province => $districts)
                         <optgroup label="{{ $province }}">
                             @foreach ($districts as $district)
-                                <option value="{{ $district }}">{{ $district }}</option>
+                                <option value="{{ $district }}" {{ old('district') == $district ? 'selected' : '' }}>{{ $district }}</option>
                             @endforeach
                         </optgroup>
                     @endforeach
@@ -93,12 +93,18 @@
                 <x-input-label for="location" :value="__('Location')" />
                 <small>Where will you perform?</small>
                 <select name="location" id="location" class="w-full">
-                    <option value="Eastern province" {{ old('location') == 'Eastern province' ? 'selected' : '' }}>Eastern province</option>
-                    <option value="Western province" {{ old('location') == 'Western province' ? 'selected' : '' }}>Western province</option>
-                    <option value="Northern Province" {{ old('location') == 'Northern Province' ? 'selected' : '' }}>Northern Province</option>
-                    <option value="Southern Province" {{ old('location') == 'Southern Province' ? 'selected' : '' }}>Southern Province</option>
-                    <option value="Kigali city" {{ old('location') == 'Kigali city' ? 'selected' : '' }}>Kigali city</option>
+                    <option value="">------------</option>
+                    @foreach ($locations as $province => $districts)
+                        <optgroup label="{{ $province }}">
+                            @foreach ($districts as $district)
+                                <option value="{{ $district }}" {{ old('location') == $district ? 'selected' : '' }}>
+                                    {{ $district }}
+                                </option>
+                            @endforeach
+                        </optgroup>
+                    @endforeach
                 </select>
+
                 <x-input-error :messages="$errors->get('location')" class="mt-2" />
             </div>
 

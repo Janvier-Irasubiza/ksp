@@ -26,7 +26,15 @@ class MyTalentController extends Controller
             'Western Province' => ['Nyamasheke', 'Rusizi', 'Karongi', 'Ngororero', 'Rutsiro', 'Rubavu', 'Nyabihu'],
         ];
 
-        return view('mytalent.apply', compact('provinces'));
+        $locations = [
+            'City of Kigali' => ['Nyarugenge', 'Kicukiro', 'Gasabo'],
+            'Eastern Province' => ['Nyagatare', 'Kayonza'],
+            'Northern Province' => ['Musanze','Gicumbi'],
+            'Southern Province' => ['Muhanga', 'Huye'],
+            'Western Province' => ['Rusizi', 'Rubavu'],
+        ];
+
+        return view('mytalent.apply', compact('provinces', 'locations'));
     }
 
     public function mytalent_apply() : view {
@@ -38,7 +46,16 @@ class MyTalentController extends Controller
             'Southern Province' => ['Kamonyi', 'Muhanga', 'Ruhango', 'Nyanza', 'Huye', 'Nyamagabe', 'Gisagara', 'Nyaruguru'],
             'Western Province' => ['Nyamasheke', 'Rusizi', 'Karongi', 'Ngororero', 'Rutsiro', 'Rubavu', 'Nyabihu'],
         ];
-        return view('agents.mytalent-apply', compact('provinces'));
+
+        $locations = [
+            'City of Kigali' => ['Nyarugenge', 'Kicukiro', 'Gasabo'],
+            'Eastern Province' => ['Nyagatare', 'Kayonza'],
+            'Northern Province' => ['Musanze','Gicumbi'],
+            'Southern Province' => ['Muhanga', 'Huye'],
+            'Western Province' => ['Rusizi', 'Rubavu'],
+        ];
+
+        return view('agents.mytalent-apply', compact('provinces', 'locations'));
     }
 
     public function mytalent_submit_app(Request $request) {
@@ -50,7 +67,7 @@ class MyTalentController extends Controller
             'district' => 'required|string|max:255',
             'talent_class' => 'required|string|in:Solo,Group',
             'talent_category' => 'required|string',
-            'location' => 'required|string|in:Eastern province,Western province,Northern Province,Southern Province,Kigali city',
+            'location' => 'required|string',
             'group_app' => 'required_if:talent_class,Group|file|mimes:pdf,xlsx,doc,docx|max:10240',
             'category_desc' => 'required|string|max:500',
             'receipt' => 'required|file|mimes:pdf,jpeg,png,jpg|max:10240',
@@ -102,9 +119,9 @@ class MyTalentController extends Controller
             ));
     
             if(!Auth::user()) {
-                return redirect()->route('applied');
+                return redirect()->route('mt-applied');
             } else {
-                return back()->with('status', 'Application submitted successfully');
+                return back()->with('status', 'Successfully registered for mytalent!');
             }
             
         } catch (\Exception $e) {
@@ -166,6 +183,12 @@ class MyTalentController extends Controller
     
         if ($app) {
             $app->status = "Approved";
+
+            if ($app->promo_code) {
+                $app->agent_part = 1000;
+            }    
+
+            $app->unavailable = null;
             $app->save();
 
             Mail::to($app->email)->send(new AppApproved(

@@ -1,4 +1,1 @@
-<div class="flex items-center">
-    <img src="{{ asset('images/mytalent_logo.svg') }}" class="" alt="">
-    <img src="{{ asset('images/logo_ksp.svg') }}" class="" alt="">
-</div>
+<img src="{{ asset('images/mytalent.svg') }}" style="border: 1px solid green; width: 1500px; height: 100px" alt="">

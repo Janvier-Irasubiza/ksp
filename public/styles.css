@@ -8,8 +8,12 @@
 .w-90 {
     max-width: 90%;
 } 
-.w-50 {
+.w-5y {
     max-width: 50%;
+}
+
+.pdg {
+    padding: 1.5rem;
 }
 
 .flex-section {
@@ -273,7 +277,7 @@ h2 {
 }
 
 .mb-8 {
-    margin-bottom: 4em;
+    margin-bottom: 5em;
 }
 
 .sm-mb-8 {
@@ -380,7 +384,11 @@ input:focus, select:focus, textarea:focus {
 }
 
 .mt-sm-w{
-    width: 100px;
+    width: 350px;
+}
+
+.mt-sm-w img {
+    max-width: 100%;
 }
 
 .ksp-sm-w {
@@ -412,7 +420,7 @@ input:focus, select:focus, textarea:focus {
     }
 
     .mt-sm-w{
-        width: 4em;
+        width: 10em;
     }
 
     .ksp-sm-w {
@@ -425,5 +433,9 @@ input:focus, select:focus, textarea:focus {
 
     .gap-10 {
         gap: 0;
+    }
+
+    .w-5y {
+        max-width: 90vw !important;
     }
 }

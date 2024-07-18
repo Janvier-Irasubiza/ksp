@@ -4,7 +4,7 @@
             <div class="flex p-0">
                 <div class="space-x-8 sm:-my-px ms-4 sm:flex">
                     <x-nav-link :href="route('admin.edu-apps')" :active="request()->routeIs('admin.edu-apps') || request()->routeIs('dashboard')">
-                        {{ __('Educational Apps' . '  (' . number_format(count($apps)) . ')') }}
+                        {{ __('Educational Apps') . '  (' . (request()->routeIs('admin.edu-apps') || request()->routeIs('dashboard') ? number_format(count($apps)) : number_format($EduApps)) . ')' }}
                     </x-nav-link>
 
                     <x-nav-link :href="route('admin.mytalent')" :active="request()->routeIs('admin.mytalent')">

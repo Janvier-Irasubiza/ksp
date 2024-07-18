@@ -4,20 +4,22 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ApplicationsController;
 use App\Http\Controllers\MyTalentController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MailsController;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
-
-Route::get('/timezone', function () {
-    return Carbon::now()->toDateTimeString();
-});
 
 Route::get('/', function () {
     return to_route('login');
 });
 
+Route::get('img', function () {
+    return view('components.mytalent-logo');
+});
+
 Route::get('/apply', [ApplicationsController::class, 'apply'])->name('apply');
 Route::post('/submit_app', [ApplicationsController::class, 'submit_app'])->name('submit-app');
 Route::get('/success', [ApplicationsController::class, 'applied'])->name('applied');
+Route::get('/mt-success', [ApplicationsController::class, 'mt_applied'])->name('mt-applied');
 Route::get('/bscholarz', function() {
     return redirect()->away('https://www.bscholarz.com');
 })->name('bscholarz');
@@ -57,5 +59,6 @@ Route::prefix('mytalent')->group(function () {
 });
 
 Route::post('/send-email', 'App\Http\Controllers\Dev\SendEmailController@sendEmail')->name('send.email');
+Route::get('send-password-set/{email}/{promo_code}', [MailsController::class, 'set_password_mail'])->name('send-password-set');
 
 require __DIR__.'/auth.php';

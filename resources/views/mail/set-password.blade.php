@@ -18,20 +18,25 @@
     </p>
 
     <p>
-        <strong>2. Enter a strong and unique password in the provided fields.</strong>
+        <strong>2. Enter a phone number which we will use to pay you.</strong>
     </p>
 
     <p>
-        <strong>3. Confirm your password and click "Submit."</strong>
+        <strong>3. Enter a strong and unique password in the provided fields.</strong>
     </p>
+
+    <p>
+        <strong>4. Confirm your password and click "Submit."</strong>
+    </p>
+
+    <br>
 
     <p>Once you have set your password, you will be able to log in and start using the system.</p>
 
     <p>If you have any questions or need assistance, please don't hesitate to contact our support team at {{ $supportEmail }} or {{ $supportPhone }}.</p>
 
-    <p>Here is your promo code: <strong>{{ $promo_code }}</strong></p>
+    <p>Here is your promo code: <strong>{{ $promo_code }}</strong></p> <br>
 
-    <p>Thank you for your cooperation.</p> <br>
 
     <p>
         Best regards,<br>

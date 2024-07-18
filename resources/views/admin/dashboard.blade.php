@@ -37,6 +37,31 @@
                             </div>
                         @endif
 
+                        @if(Auth::user()->type == 'BS')
+                        <div class="card mb-4">
+                                <div class="card-header-tab card-header py-3 d-flex items-center">
+                                    <div class="card-header-title font-size-lg font-weight-normal col-lg-7">
+                                        {{ Auth::user()->name }} <br>
+                                        <p class="text-muted mb-0">{{ Auth::user()->email }}</p>
+                                        <p class="text-muted mb-0">{{ Auth::user()->phone }}</p>
+                                    </div>
+                                    <div class="btn-actions-pane-right d-flex flex-row-reverse text-capitalize col-lg-5">
+                                        <div class="widget-chart-content ml-2 px-3">
+                                            <div class="widget-subheading">Balance <small>(RWF)</small></div>
+                                            <div class="widget-numbers text-success mt-1 f2">
+                                                <span style="font-weight: 600">{{ number_format($balance) }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="icon-wrapper d-flex align-items-center justify-content-center">
+                                            <div class="icon-wrapper-bg opacity-9 rounded-circle" style="background: #80ffaa; padding: 15px 17px">
+                                                <i class="fa-solid fa-wallet" style="font-size: 25px"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
                         @if(Auth::user()->type == 'AGT')
                             @include('admin.partials.agent-nav')
                         @elseif(Auth::user()->type == 'BS')
@@ -99,8 +124,8 @@
                                     @foreach($apps as $app)
                                         <tr>
                                             <td>{{ $app->names }}</td>
-                                            <td>{{ $app->email }}</td>
                                             <td>{{ $app->phone }}</td>
+                                            <td>{{ $app->email }}</td>
                                             <td>{{ $app->course }}</td>
                                             <td>{{ $app->edu_level }}</td>
                                             <td><a href="{{ asset($app->app_letter) }}">View App letter</a></td>
@@ -134,7 +159,36 @@
                             </div>
                         @endif
                     @else
-                        here
+                    
+                        <div class="flex gap-3">
+                            <div class="btn-actions-pane-right border rounded p-2 w-full text-center">
+                                <div class="widget-chart-content ml-2 px-3">
+                                    <div class="widget-subheading">Approved apps</div>
+                                    <div class="widget-numbers text-success mt-1">
+                                        <span style="font-weight: 600">{{ number_format(count($apps)) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="btn-actions-pane-right border rounded p-2 text-center w-full">
+                                <div class="widget-chart-content ml-2 px-3">
+                                    <div class="widget-subheading">Pending Apps</div>
+                                    <div class="widget-numbers text-success mt-1">
+                                        <span style="font-weight: 600">{{ number_format($pendingApps) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="btn-actions-pane-right border rounded p-2 w-full text-center">
+                                <div class="widget-chart-content ml-2 px-3">
+                                    <div class="widget-subheading">Apps Revenue</div>
+                                    <div class="widget-numbers text-success mt-1">
+                                        <span style="font-weight: 600">{{ number_format($appsBal) }} RWF</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     @endif
                 </div>
             </div>

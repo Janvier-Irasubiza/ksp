@@ -5,8 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>NKUNGANIRE BURUSE KSP RWANDA APPLICATION FORM 2024
-        </title>
+        <title>Application received</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -31,9 +30,10 @@
                 </a>
             </div>
 
-            <div class="w-50 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg mb-8">
+            <div class="w-5y pdg bg-white shadow-md overflow-hidden sm:rounded-lg mb-8">
                 {{ $slot }}
             </div>
+
 
             <footer class="bg-gray-200 py-4 border-t">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between">

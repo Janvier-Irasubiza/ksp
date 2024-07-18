@@ -75,4 +75,8 @@ class ApplicationsController extends Controller
     public function applied():view {
         return view('feedback');
     }
+
+    public function mt_applied():view {
+        return view('mt-feedback');
+    }
 }
