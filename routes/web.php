@@ -39,6 +39,13 @@ Route::get('/mytalent-apps', [AdminController::class, 'mytalent_apps'])->middlew
 Route::get('/mytalent-apply', [MyTalentController::class, 'mytalent_apply'])->middleware(['auth', 'verified'])->name('mytalent-apply');
 Route::get('/my-apps', [AdminController::class, 'my_apps'])->middleware(['auth', 'verified'])->name('my-apps');
 
+Route::put('/edu/{id}', [ApplicationsController::class, 'update'])->middleware(['auth', 'verified'])->name('edu.update');
+Route::get('/app-info/{app}', [ApplicationsController::class, 'app_info'])->middleware(['auth', 'verified'])->name('app-info');
+Route::get('/edu/approve/{app}', [ApplicationsController::class, 'approve_app'])->middleware(['auth', 'verified'])->name('edu.approve-app');
+Route::put('/edu/deny/{app}', [ApplicationsController::class, 'deny'])->middleware(['auth', 'verified'])->name('edu.deny');
+Route::get('/edu/unreachable/{app}', [ApplicationsController::class, 'unreachable'])->middleware(['auth', 'verified'])->name('edu.unreachable');
+Route::get('/apply', [ApplicationsController::class, 'admin_apply'])->name('admin.apply');
+
 Route::post('/mytalent-submit-app', [MyTalentController::class, 'mytalent_submit_app'])->name('mytalent-submit-app');
 Route::get('/app/{app}', [MyTalentController::class, 'app_info'])->middleware(['auth', 'verified'])->name('app');
 Route::put('/mytalent/{id}', [MyTalentController::class, 'update'])->middleware(['auth', 'verified'])->name('mytalent.update');

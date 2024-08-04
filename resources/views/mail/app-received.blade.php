@@ -6,7 +6,7 @@
 <body>
     <p>Dear {{ $clientName }},</p>
 
-    <p>Thank you for your application to {{ config('app.name') }} for <strong>{{ $appName }}</strong>!</p>
+    <p>Thank you for your application to {{ config('app.name') }}@if($appName) for <strong>{{ $appName }}</strong>@endif!</p>
 
     <p>
         We are pleased to inform you that we have received your application. Our team is currently reviewing your submission and will contact you soon with further details.

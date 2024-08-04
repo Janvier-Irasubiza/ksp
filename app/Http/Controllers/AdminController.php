@@ -34,7 +34,9 @@ class AdminController extends Controller
         if ($user->type == 'AGT') {
             $apps = $appsQuery->where('promo_code', $user->promo_code)->paginate(10);
             $myTalentApps = $myTalentQuery->where('promo_code', $user->promo_code)->count();
-            $balance = $myTalentQuery->where('promo_code', $user->promo_code)->where('status', 'Approved')->sum('agent_part');
+            $mt_balance = $myTalentQuery->where('promo_code', $user->promo_code)->where('status', 'Approved')->sum('agent_part');
+            $edu_balance = $appsQuery->where('promo_code', $user->promo_code)->where('status', 'Approved')->sum('agent_part');
+            $balance = $mt_balance + $edu_balance;
         } elseif ($user->type == 'BS') {
             $apps = $appsQuery->where('status', 'Approved')->get();
             $myTalentApps = $myTalentQuery->where('status', 'Approved')->count();
@@ -124,7 +126,9 @@ class AdminController extends Controller
         if ($user->type == 'AGT') {
             $appsQuery->where('promo_code', $user->promo_code);
             $myTalentApps = MyTalent::where('promo_code', $user->promo_code)->count();
-            $balance = MyTalent::where('status', 'Approved')->where('promo_code', $user->promo_code)->sum('agent_part');
+            $edu_balance = Application::where('status', 'Approved')->where('promo_code', $user->promo_code)->sum('agent_part');
+            $mt_balance = MyTalent::where('status', 'Approved')->where('promo_code', $user->promo_code)->sum('agent_part');
+            $balance = $edu_balance + $mt_balance;
         }
     
         $apps = $appsQuery->where(function($q) use ($query) {
@@ -167,7 +171,9 @@ class AdminController extends Controller
             $appsQuery->where('promo_code', $user->promo_code);
             $EduApps = Application::where('promo_code', $user->promo_code)->count();
             $myTalentApps = MyTalent::where('promo_code', $user->promo_code)->count();
-            $balance = MyTalent::where('status', 'Approved')->where('promo_code', $user->promo_code)->sum('agent_part');
+            $mt_balance = Application::where('promo_code', $user->promo_code)->where('status', 'Approved')->sum('agent_part');
+            $edu_balance = $appsQuery->where('promo_code', $user->promo_code)->where('status', 'Approved')->sum('agent_part');
+            $balance = $mt_balance + $edu_balance;
         }
     
         $apps = $appsQuery->where(function($q) use ($query) {

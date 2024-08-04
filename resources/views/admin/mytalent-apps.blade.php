@@ -73,7 +73,7 @@
                         @if(Auth::user()->type !== 'BS')
                             <div class="d-flex justify-content-between align-items-center">
                                 @if(count($apps) > 0)
-                                    <form action="{{ route('agents') }}" method="GET">
+                                    <form action="{{ route('admin.mytalent') }}" method="GET">
                                         <x-text-input type="text" name="key" placeholder="Search..." value="{{ request('key') }}"/>
                                         <button type="submit" class="btn btn-primary">Search</button>
                                     </form>

@@ -18,7 +18,7 @@ class AppReceived extends Mailable {
     public $companyPhone;
     public $companyEmail;
 
-    public function __construct($clientName, $appName, $companyPhone, $companyEmail)
+    public function __construct($clientName, $appName=null, $companyPhone, $companyEmail)
     {
         $this->clientName = $clientName;
         $this->appName = $appName;

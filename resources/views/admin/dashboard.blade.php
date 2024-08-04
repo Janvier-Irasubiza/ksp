@@ -73,7 +73,7 @@
                         @if(Auth::user()->type !== 'BS')
                             <div class="d-flex justify-content-between align-items-center">
                                 @if(count($apps) > 0)
-                                    <form action="{{ route('agents') }}" method="GET">
+                                    <form action="{{ route('dashboard') }}" method="GET">
                                         <x-text-input type="text" name="key" placeholder="Search..." value="{{ request('key') }}"/>
                                         <button type="submit" class="btn btn-primary">Search</button>
                                     </form>
@@ -82,8 +82,8 @@
                             </div>
                         @endif
                                 
-                        @if(Auth::user()->type !== 'AGT' && Auth::user()->type !== 'BS')
-                            <a href="{{ route('apply') }}" class="btn btn-primary">New Application</a>
+                        @if(Auth::user()->type !== 'BS')
+                            <a href="{{ route('admin.apply') }}" class="btn btn-primary">New Application</a>
                         @endif
                     </div>
 
@@ -97,12 +97,12 @@
                                         <th>Email</th>
                                         <th>Course</th>
                                         <th>Education Level</th>
-                                        <th>Application Letter</th>
-                                        <th>Certificate</th>
-                                        <th>Receipt</th>
                                         <th>Applied on</th>
-                                        <th>Agent</th>
+                                        @if(Auth::user()->type !== 'AGT')
+                                            <th>Agent</th>
+                                        @endif
                                         <th>Status</th>
+                                        <th>Details</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -112,12 +112,12 @@
                                         <th>Email</th>
                                         <th>Course</th>
                                         <th>Education Level</th>
-                                        <th>Application Letter</th>
-                                        <th>Certificate</th>
-                                        <th>Receipt</th>
                                         <th>Applied on</th>
-                                        <th>Agent</th>
+                                        @if(Auth::user()->type !== 'AGT')
+                                            <th>Agent</th>
+                                        @endif
                                         <th>Status</th>
+                                        <th>Details</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -128,11 +128,14 @@
                                             <td>{{ $app->email }}</td>
                                             <td>{{ $app->course }}</td>
                                             <td>{{ $app->edu_level }}</td>
-                                            <td><a href="{{ asset($app->app_letter) }}">View App letter</a></td>
-                                            <td><a href="{{ asset($app->certificate) }}">View Certificate</a></td>
-                                            <td><a href="{{ asset($app->receipt) }}">View Receipt</a></td>
                                             <td>{{ $app->created_at }}</td>
-                                            <td>{{ $app->promo_code != "" ? $app->promo_code : 'N/A' }}</td>
+                                            @if(Auth::user()->type !== 'AGT')
+                                                <td>
+                                                    <a href="{{$app->promo_code != '' ? route('agent.info', ['agt'=>$app->promo_code]) : '#' }}" class="">
+                                                        {{ $app->promo_code != "" ? $app->promo_code : 'N/A' }}
+                                                    </a>
+                                                </td>
+                                            @endif
                                             <td>
                                                 <span class="px-2 py-1 badge 
                                                     {{ $app->status == 'Pending' ? 'badge-warning' : 
@@ -146,6 +149,7 @@
                                                     </span>
                                                 @endif
                                             </td>
+                                            <td><a href="{{ route('app-info', ['app' => $app->app_id]) }}">More details</a>                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
