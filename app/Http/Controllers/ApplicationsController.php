@@ -160,7 +160,7 @@ class ApplicationsController extends Controller
             $app->status = "Approved";
 
             if ($app->promo_code) {
-                $app->agent_part = 700;
+                $app->agent_part = 1000;
             }    
 
             $app->unavailable = null;
